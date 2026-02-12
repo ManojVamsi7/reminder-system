@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error - Invalid Link</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+      width: 100%;
+      padding: 40px;
+      text-align: center;
+      animation: slideUp 0.5s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .icon {
+      font-size: 72px;
+      margin-bottom: 20px;
+    }
+    
+    h1 {
+      color: #f5576c;
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+    
+    p {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .error-reasons {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 20px;
+      margin: 30px 0;
+      text-align: left;
+      border-radius: 8px;
+    }
+    
+    .error-reasons h3 {
+      color: #856404;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    
+    .error-reasons ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .error-reasons li {
+      color: #856404;
+      margin-bottom: 10px;
+      padding-left: 25px;
+      position: relative;
+    }
+    
+    .error-reasons li:before {
+      content: "•";
+      position: absolute;
+      left: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">⚠️</div>
+    <h1>Invalid or Expired Link</h1>
+    <p>We're sorry, but this renewal link is no longer valid.</p>
+    
+    <div class="error-reasons">
+      <h3>This could be because:</h3>
+      <ul>
+        <li>The link has expired</li>
+        <li>You've already submitted your response</li>
+        <li>The link is invalid or has been tampered with</li>
+      </ul>
+    </div>
+    
+    <p>If you believe this is an error, please contact our support team.</p>
+  </div>
+</body>
+</html>
