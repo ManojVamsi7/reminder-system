@@ -1,22 +1,5 @@
 require('dotenv').config();
 
-// Validate required environment variables
-const requiredEnvVars = [
-  'GOOGLE_SHEET_ID',
-  'GOOGLE_SERVICE_ACCOUNT_EMAIL',
-  'EMAIL_USER',
-  'EMAIL_APP_PASSWORD',
-  'SECRET_KEY'
-];
-
-const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
-
-if (missingVars.length > 0) {
-  console.error('\n❌ CRITICAL ERROR: Missing required environment variables:');
-  missingVars.forEach(varName => console.error(`   - ${varName}`));
-  console.error('Please check your .env file or Render Environment settings.\n');
-}
-
 module.exports = {
   // Google Sheets
   googleSheetId: process.env.GOOGLE_SHEET_ID,

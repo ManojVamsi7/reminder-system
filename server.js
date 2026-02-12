@@ -68,15 +68,6 @@ app.listen(PORT, () => {
     console.log(`Environment: ${config.nodeEnv}`);
     console.log(`Server running on: ${config.baseUrl}`);
     console.log(`Port: ${PORT}`);
-
-    // Debug Environment Variables (Keys only for security)
-    console.log('\n🔍 Detected Environment Keys:');
-    const criticalKeys = ['GOOGLE_SHEET_ID', 'GOOGLE_SERVICE_ACCOUNT_EMAIL', 'EMAIL_USER', 'EMAIL_APP_PASSWORD', 'SECRET_KEY'];
-    criticalKeys.forEach(key => {
-        const status = process.env[key] ? '✅' : '❌ MISSING';
-        console.log(`   ${status} ${key}`);
-    });
-
     console.log('===========================================\n');
 
     // Start cron job
