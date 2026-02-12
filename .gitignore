@@ -10,7 +10,7 @@ yarn.lock
 
 # Google Service Account credentials
 credentials/
-*.json
+credentials/*.json
 
 # Logs
 logs/
