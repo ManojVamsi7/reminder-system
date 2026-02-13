@@ -9,6 +9,9 @@ const { errorHandler, notFoundHandler } = require('./src/middleware/errorHandler
 
 const app = express();
 
+// Trust proxy (required for Railway/Render/Heroku)
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet({
     contentSecurityPolicy: {

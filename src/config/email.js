@@ -41,11 +41,12 @@ if (useSendGrid) {
         }
     };
 } else {
-    // Gmail SMTP (for local development only)
+    // Gmail SMTP
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
         secure: false,
+        family: 4, // Force IPv4 to prevent ENETUNREACH on Railway
         auth: {
             user: config.email.user,
             pass: config.email.password,
