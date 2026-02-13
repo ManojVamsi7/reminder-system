@@ -44,9 +44,9 @@ if (useSendGrid) {
     // Gmail SMTP
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
-        port: 587,
-        secure: false,
-        family: 4, // Force IPv4 to prevent ENETUNREACH on Railway
+        port: 465,
+        secure: true, // Use SSL
+        family: 4, // Force IPv4
         auth: {
             user: config.email.user,
             pass: config.email.password,
