@@ -7,7 +7,13 @@ const useSendGrid = config.email.service.toLowerCase() === 'sendgrid';
 
 if (useSendGrid) {
     // SendGrid HTTP API (works on Render free tier - no SMTP ports needed!)
-    sgMail.setApiKey(config.email.password); // API key is stored in EMAIL_APP_PASSWORD
+    const apiKey = config.email.password;
+
+    // Debug: Check if API key is loaded (without exposing full key)
+    console.log('🔑 API Key exists:', !!apiKey);
+    console.log('🔑 API Key starts with:', apiKey ? apiKey.substring(0, 8) + '...' : 'MISSING');
+
+    sgMail.setApiKey(apiKey); // API key is stored in EMAIL_APP_PASSWORD
 
     // Test the API key
     sgMail.setClient(require('@sendgrid/client'));
