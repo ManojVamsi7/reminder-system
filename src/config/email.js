@@ -1,24 +1,42 @@
+const sgMail = require('@sendgrid/mail');
 const nodemailer = require('nodemailer');
 const config = require('./env');
 
-// Create email transporter
-// Supports both SendGrid (recommended for production) and Gmail SMTP (for local testing)
-let transporter;
+// Determine which email service to use
+const useSendGrid = config.email.service.toLowerCase() === 'sendgrid';
 
-if (config.email.service.toLowerCase() === 'sendgrid') {
-    // SendGrid configuration (recommended for Render.com and production)
-    transporter = nodemailer.createTransport({
-        host: 'smtp.sendgrid.net',
-        port: 587,
-        secure: false,
-        auth: {
-            user: 'apikey', // This is always 'apikey' for SendGrid
-            pass: config.email.password, // Your SendGrid API Key
-        },
-    });
+if (useSendGrid) {
+    // SendGrid HTTP API (works on Render free tier - no SMTP ports needed!)
+    sgMail.setApiKey(config.email.password); // API key is stored in EMAIL_APP_PASSWORD
+
+    // Test the API key
+    sgMail.setClient(require('@sendgrid/client'));
+    console.log('✅ SendGrid HTTP API configured');
+
+    // Create a nodemailer-compatible wrapper for SendGrid
+    module.exports = {
+        sendMail: async (mailOptions) => {
+            try {
+                const msg = {
+                    to: mailOptions.to,
+                    from: config.email.from || config.email.user,
+                    subject: mailOptions.subject,
+                    text: mailOptions.text,
+                    html: mailOptions.html,
+                };
+
+                const response = await sgMail.send(msg);
+                console.log(`✅ Email sent via SendGrid HTTP API to ${mailOptions.to}`);
+                return response;
+            } catch (error) {
+                console.error('❌ SendGrid API error:', error.response?.body || error.message);
+                throw error;
+            }
+        }
+    };
 } else {
-    // Gmail SMTP configuration (for local development)
-    transporter = nodemailer.createTransport({
+    // Gmail SMTP (for local development only)
+    const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
         secure: false,
@@ -27,15 +45,14 @@ if (config.email.service.toLowerCase() === 'sendgrid') {
             pass: config.email.password,
         },
     });
+
+    transporter.verify((error, success) => {
+        if (error) {
+            console.error('❌ Gmail SMTP error:', error.message);
+        } else {
+            console.log('✅ Gmail SMTP ready');
+        }
+    });
+
+    module.exports = transporter;
 }
-
-// Verify transporter configuration
-transporter.verify((error, success) => {
-    if (error) {
-        console.error('❌ Email transporter configuration error:', error.message);
-    } else {
-        console.log(`✅ Email transporter ready (${config.email.service})`);
-    }
-});
-
-module.exports = transporter;
